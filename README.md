@@ -9,6 +9,7 @@ Each account in the COA can contain sub-accounts, making the COA a tree structur
 * Each account in the tree that has sub-accounts (has_children=true) can be expanded.
 * An account with children can also be collapsed once expanded, the data is saved (whether or not an
 account node is expanded in the corresponding node object) in the redux store.
+* Each child that is expanded is given a new color in a calculated in a way to emphasize the hierarchy.
 * Refresh button - In case there is no account that can expand (no children), you can easily refresh the page.
 * (Because it's generate data)
 * Collapse all button - Collapse all the accounts with children that expanded.
