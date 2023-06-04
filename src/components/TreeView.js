@@ -16,13 +16,10 @@ const TreeView = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Mock API response to fetch the chart of accounts data
-  const fetchChartOfAccounts = () => {
-    // Mock API call
+  const fetchChartOfAccounts = async () => {
+    // Simulate an API call to fetch the chart of accounts data
     const baseName = "Account";
-    const result = accountService.generateNodes(baseName);
-
-    // Set the chart of accounts in the Redux store
+    const result = await accountService.generateNodes(baseName);
     dispatch(setChartOfAccounts(result));
   };
 
