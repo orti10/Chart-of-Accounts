@@ -34,14 +34,10 @@ button {
 }
 
 .collapseAllButton {
-  background-color: rgb(196, 195, 210);
+  background-color: blue;
   color: white;
   border: none;
   padding: 15px 20px;
   font-size: 16px;
   cursor: pointer;
-}
-
-.collapseAllButton:hover {
-  background-color: blue;
 }
