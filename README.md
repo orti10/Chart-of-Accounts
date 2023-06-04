@@ -24,4 +24,4 @@ Each account in the COA can contain sub-accounts, making the COA a tree structur
 3. Open the terminals, and start the frontend client - `npm start`
 
 Dashboars with data:
-![dashboard](https://github.com/orti10/Chart-of-Accounts/assets/44768171/44ff24aa-a3ee-45bb-92c8-2eada6b9ef04)
+![dashboard](https://github.com/orti10/Chart-of-Accounts/assets/44768171/1470b539-7789-40fe-bd87-8099c31eb555)
