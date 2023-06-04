@@ -1,0 +1,54 @@
+Define the Backend (No-code):
+
+1. Define the DB structure to hold the COA data:
+
+Chart of Accounts (COA) data in MongoDB. Hierarchical structure that represents the tree relationships between accounts.
+
+Collection: chart_of_accounts
+
+
+Column      Name Type	Value
+id			String	 	Unique identifier for the account
+name		String		Name of the account
+parent_id	String		Identifier of the parent account; null if it is a root account
+accounts	Array		An array of sub-accounts
+
+//(optional field) account_id_path: A denormalized field that represents the hierarchical path of the account IDs from the root to the current account. This field can be stored as a string or an array of IDs.
+
+The "id" column will serve as the primary key to uniquely identify each account.
+The "name" column will store the name of each account in the COA.
+The "parent_id" column will store the identifier of the parent account for each account in the hierarchical structure.
+If an account does not have a parent, the "parent_id" value can be set to NULL.
+The "accounts" column will store array of nested child-accounts, each following the same structure as the top-level accounts document.
+
+The "parent_id" field holds the reference to the "id" field of the parent account.
+For root-level accounts, the "parent_id" field is set to null.
+The "accounts" field is an array of sub-accounts (children), following the same structure as the top-level account documents.
+The COA data can be stored in MongoDB by inserting the documents into the "chart_of_accounts" collection.
+Each document represents an account, and the parent-child relationships are established through the "parent_id" field.
+
+
+2. Define the API you would use to read and write COA data from and to the server
+A. Read COA: This endpoint retrieves the COA data from the server:
+	* Endpoint: GET /coa
+	* Response: Returns the COA data in the JSON format, such as the example structure provided.
+
+B. Create Account: This endpoint allows creating a new account within the COA.
+	* Endpoint: POST /coa/accounts
+	* Request Body: Contains the account details, including the name and optional parentId (if the account is a sub-account).
+	* Response: Returns the created account with its generated id
+
+C. Update Account: This endpoint allows updating an existing account within the COA.
+	* Endpoint: PUT /coa/accounts/{accountId}
+	* Request Body: Contains the updated account details, including the name.
+	* Response: Returns the updated account.
+
+D. Delete Account: This endpoint allows deleting an account from the COA.
+
+	* Endpoint: DELETE /coa/accounts/{accountId}
+	* Response: Returns a success message indicating the account was deleted.
+
+E. Get All Children by Account ID: This endpoint retrieves all the children accounts of a given account ID in the COA.
+	* Endpoint: GET /coa/accounts/{accountId}/children (ex: /coa/accounts/gfymcd/children)
+	* Response: Returns the children accounts of the specified account ID in the JSON format.
+
