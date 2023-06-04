@@ -17,9 +17,10 @@ account node is expanded in the corresponding node object) in the redux store.
 1. Clone the repository to your local machine 
 git clone https://github.com/orti10/Chart-of-Accounts.git
 2. Install the dependencies by running `npm i` on the command line from the project directory.
+3. Open the terminals, and start the frontend client - `npm start`
 
-Open the terminals:
-* Start the frontend client - npm start
+
+
 
 Dashboars with data:
 ![dashboard](https://github.com/orti10/Chart-of-Accounts/assets/44768171/44ff24aa-a3ee-45bb-92c8-2eada6b9ef04)
