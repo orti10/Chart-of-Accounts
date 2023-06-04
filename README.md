@@ -1,4 +1,4 @@
-#Chart of Accounts
+# Chart of Accounts
 
 ## Summary
 Application that managing customer’s CoA (Chart of Accounts) - A hierarchical structure of the different accounts owned and controlled by the customer.
