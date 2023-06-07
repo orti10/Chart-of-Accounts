@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setChartOfAccounts } from "../redux/actions";
+import { connect } from "react-redux";
+import {
+  setChartOfAccounts,
+  expandAccount,
+  collapseAccount,
+} from "../redux/actions";
 import { accountService } from "../services/account.service";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import Tooltip from "@mui/material/Tooltip";
 import ListView from "./ListView";
 import "./TreeView.css";
 
-const TreeView = () => {
-  const chartOfAccounts = useSelector((state) => state.chartOfAccounts);
-  const dispatch = useDispatch();
-
+const TreeView = ({ chartOfAccounts, dispatch }) => {
   useEffect(() => {
     fetchChartOfAccounts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -25,37 +26,24 @@ const TreeView = () => {
 
   // Handle account expansion
   const handleExpandAccount = (accountId) => {
-    // Check if the account has already been expanded
     const account = findAccount(chartOfAccounts, accountId);
     if (account && account.has_children && !account.expanded) {
-      // Mock API call to fetch sub-accounts
-      if (account.accounts?.length) {
-        const updatedAccount = {
-          ...account,
-          expanded: true,
-        };
-        const updatedChartOfAccounts = accountService.updateAccount(
-          chartOfAccounts,
-          accountId,
-          updatedAccount
-        );
-        dispatch(setChartOfAccounts(updatedChartOfAccounts));
+      if (account.accounts && account.accounts.length) {
+        // Dispatch the expandAccount action with the accountId
+        dispatch(expandAccount(accountId));
       } else {
         const baseName = "Account";
         const subAccounts = accountService.generateNodes(baseName);
-        // Update the account's expanded state
         const updatedAccount = {
           ...account,
           expanded: true,
           accounts: subAccounts,
         };
-        // Create a new copy of the chartOfAccounts array
         const updatedChartOfAccounts = accountService.updateAccount(
           chartOfAccounts,
           accountId,
           updatedAccount
         );
-        // Dispatch the setChartOfAccounts action with the updated array
         dispatch(setChartOfAccounts(updatedChartOfAccounts));
       }
     }
@@ -63,19 +51,10 @@ const TreeView = () => {
 
   // Handle account collapse
   const handleCollapseAccount = (accountId) => {
-    // Check if the account has already been expanded
     const account = findAccount(chartOfAccounts, accountId);
     if (account && account.expanded) {
-      // Update the account's expanded state
-      const updatedAccount = { ...account, expanded: false };
-      // Create a new copy of the chartOfAccounts array
-      const updatedChartOfAccounts = accountService.updateAccount(
-        chartOfAccounts,
-        accountId,
-        updatedAccount
-      );
-      // Dispatch the setChartOfAccounts action with the updated array
-      dispatch(setChartOfAccounts(updatedChartOfAccounts));
+      // Dispatch the collapseAccount action with the accountId
+      dispatch(collapseAccount(accountId));
     }
   };
 
@@ -112,6 +91,7 @@ const TreeView = () => {
     }
     return null;
   };
+
   const handleRefresh = () => {
     window.location.reload();
   };
@@ -144,4 +124,10 @@ const TreeView = () => {
   );
 };
 
-export default TreeView;
+const mapStateToProps = (state) => {
+  return {
+    chartOfAccounts: state.chartOfAccounts,
+  };
+};
+
+export default connect(mapStateToProps)(TreeView);
